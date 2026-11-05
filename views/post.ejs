@@ -1,0 +1,19 @@
+<%- include("partials/header.ejs") %>
+
+<article class="post-full">
+  <a href="/" class="back-link">&larr; All posts</a>
+  <h1><%= post.title %></h1>
+  <p class="post-meta">
+    By <%= post.author %> &middot; <%= post.createdAt.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) %>
+    <% if (post.updatedAt) { %>&middot; <em>edited <%= post.updatedAt.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) %></em><% } %>
+  </p>
+  <div class="post-body"><%= post.content %></div>
+  <div class="post-actions">
+    <a class="btn btn-outline-secondary" href="/posts/<%= post.id %>/edit">Edit</a>
+    <form action="/posts/<%= post.id %>/delete" method="POST" onsubmit="return confirm('Delete this post?');">
+      <button class="btn btn-outline-danger" type="submit">Delete</button>
+    </form>
+  </div>
+</article>
+
+<%- include("partials/footer.ejs") %>

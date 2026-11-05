@@ -1,0 +1,31 @@
+<%- include("partials/header.ejs") %>
+
+<% const editing = post && post.id; %>
+<section class="form-card">
+  <h1><%= editing ? "Edit Post" : "New Post" %></h1>
+
+  <% if (error) { %>
+    <div class="alert alert-danger"><%= error %></div>
+  <% } %>
+
+  <form action="<%= editing ? `/posts/${post.id}/edit` : '/posts' %>" method="POST">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" name="title" maxlength="120" required value="<%= post ? post.title : '' %>">
+    </div>
+    <div class="mb-3">
+      <label for="author" class="form-label">Author</label>
+      <input type="text" class="form-control" id="author" name="author" maxlength="60" placeholder="Anonymous" value="<%= post && post.author !== 'Anonymous' ? post.author : '' %>">
+    </div>
+    <div class="mb-3">
+      <label for="content" class="form-label">Content</label>
+      <textarea class="form-control" id="content" name="content" rows="10" required><%= post ? post.content : '' %></textarea>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary"><%= editing ? "Save Changes" : "Publish" %></button>
+      <a href="<%= editing ? `/posts/${post.id}` : '/' %>" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+  </form>
+</section>
+
+<%- include("partials/footer.ejs") %>
